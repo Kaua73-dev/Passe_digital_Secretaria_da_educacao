@@ -1,0 +1,73 @@
+*{
+    margin: auto;
+}
+
+.background{
+    background: steelblue;
+    height: 100vh;  
+}
+
+.card_login{
+    background: white;
+    height: 70vh;
+    width: 50vh;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.427);
+
+}
+
+.titulo_login{
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+
+}
+
+.texto_matricula, .texto_senha{
+    margin: 0px 0px -40px 20px;
+}
+
+input[type="password"], input[type="text"]{
+    height: 40px;
+    width: 340px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 0.5px solid;
+    margin-bottom: -20px; 
+}
+
+.botao_login{
+    background-color:rgb(25, 0, 255);
+    color: white;
+    border-radius: 10px;
+    height: 50px;
+    width: 340px;
+    margin-top: 10px;
+    transition: 1 ;
+    border: 0cap;
+
+    box-shadow: 0 5px 5px #0000007a;
+}
+.botao_login:hover{
+    transform: scale(1.03);    
+}
+
+#esquecer_senha{
+    font-size: 18px ;
+    
+}
+
+.botao_clique_aqui{
+    text-decoration: none;
+    color: rgb(35, 35, 254);
+}
