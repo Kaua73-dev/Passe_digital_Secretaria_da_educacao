@@ -27,16 +27,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 500)
+    @Column(length = 500, nullable = false)
     private String name;
 
-    @Column(length = 550, unique = true)
+    @Column(length = 550, unique = true, nullable = false)
     private String email;
 
-    @Column(length = 7, unique = true)
+    @Column(length = 7, unique = true, nullable = false)
     private String registration;
 
-    @Column(length = 550)
+    @Column(length = 550, nullable = false)
     private String password;
 
     @Column(length = 2)
@@ -45,7 +45,9 @@ public class User implements UserDetails {
     @Column(length = 50)
     private String education; // etapa
 
+    @Column(nullable = false)
     private LocalDate birth;
+
     private LocalDateTime createAt;
 
     @Enumerated(EnumType.STRING)
