@@ -1,8 +1,10 @@
 package com.PasseDigital.system.service.user;
 
 import com.PasseDigital.system.config.TokenConfig;
+import com.PasseDigital.system.exception.user.UserNotAllowedException;
 import com.PasseDigital.system.exception.user.UserNotFoundException;
 import com.PasseDigital.system.model.dto.request.user.UserLoginRequest;
+import com.PasseDigital.system.model.dto.response.user.StudentResponse;
 import com.PasseDigital.system.model.dto.response.user.UserLoginResponse;
 import com.PasseDigital.system.model.entity.User;
 import com.PasseDigital.system.model.repository.UserRepository;
@@ -16,11 +18,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenConfig tokenConfig;
     private final AuthenticationManager authenticationManager;
-
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenConfig tokenConfig, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
@@ -28,6 +30,7 @@ public class UserService {
         this.tokenConfig = tokenConfig;
         this.authenticationManager = authenticationManager;
     }
+
 
     // publica para ambos
     public UserLoginResponse login(UserLoginRequest request){
@@ -54,5 +57,26 @@ public class UserService {
 
         userRepository.deleteUserByRegistration(registration);
     }
+
+    // student/admin/secretary
+    public StudentResponse getInfoStudent(String registration){
+
+        User student = userRepository.findByRegistration(registration).orElseThrow(UserNotFoundException::new);
+
+        if(!student.getUserEnum().equals(UserEnum.STUDENT)){
+            throw new UserNotAllowedException();
+        }
+
+        return new StudentResponse(
+                student.getName(),
+                student.getEmail(),
+                student.getRegistration(),
+                student.getStudentClass(),
+                student.getEducation(),
+                student.getBirth(),
+                student.getUserStudentShiftEnum()
+        );
+    }
+
 
 }

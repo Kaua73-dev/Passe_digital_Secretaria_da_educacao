@@ -1,12 +1,11 @@
 package com.PasseDigital.system.controller.user;
 
 import com.PasseDigital.system.model.dto.request.user.StudentRegisterRequest;
+import com.PasseDigital.system.model.dto.request.user.StudentUpdateRequest;
 import com.PasseDigital.system.model.dto.response.user.StudentRegisterResponse;
+import com.PasseDigital.system.model.dto.response.user.StudentUpdateResponse;
 import com.PasseDigital.system.service.user.SecretaryService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/secretary")
@@ -23,5 +22,9 @@ public class SecretaryController {
         return secretaryService.studentRegister(request);
     }
 
+    @PutMapping("/student/{studentId}")
+    public StudentUpdateResponse updateStudent(@PathVariable Integer studentId, @RequestBody StudentUpdateRequest request){
+        return secretaryService.updateStudent(studentId, request);
+    }
 
 }

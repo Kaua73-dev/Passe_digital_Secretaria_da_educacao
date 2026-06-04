@@ -2,6 +2,7 @@ package com.PasseDigital.system.controller.user;
 
 
 import com.PasseDigital.system.model.dto.request.user.UserLoginRequest;
+import com.PasseDigital.system.model.dto.response.user.StudentResponse;
 import com.PasseDigital.system.model.dto.response.user.UserLoginResponse;
 import com.PasseDigital.system.service.user.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,11 @@ public class UserController {
     @DeleteMapping("/delete")
     public void deleteUser(@RequestBody String registration){
         userService.deleteUser(registration);
+    }
+
+    @GetMapping("/student")
+    public StudentResponse getInfoStudent(@RequestBody String registration){
+        return userService.getInfoStudent(registration);
     }
 
 
