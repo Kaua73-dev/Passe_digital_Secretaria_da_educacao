@@ -35,15 +35,17 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
 
 
-                        // user
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/auth/delete").hasAnyRole("ADMIN", "SECRETARY")
-
-                        // secretary
-                        .requestMatchers(HttpMethod.POST, "/secretary/student/register").hasAnyRole("ADMIN", "SECRETARY")
+                                // user
+                                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/auth/delete").hasAnyRole("ADMIN", "SECRETARY")
+                                .requestMatchers(HttpMethod.GET, "/auth/student").hasAnyRole("ADMIN", "SECRETARY", "STUDENT")
 
 
-                        // student
+                                // secretary
+                                .requestMatchers(HttpMethod.POST, "/secretary/student/register").hasAnyRole("ADMIN", "SECRETARY")
+                                .requestMatchers(HttpMethod.PUT, "/secretary/{studentId}").hasAnyRole("ADMIN", "SECRETARY")
+
+                                // student
 
 
                 )
