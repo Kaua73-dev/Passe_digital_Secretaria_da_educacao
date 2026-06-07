@@ -1,4 +1,4 @@
-package com.PasseDigital.system.model.entity;
+package com.PasseDigital.system.model.entity.user;
 
 
 import com.PasseDigital.system.model.roles.user.UserEnum;

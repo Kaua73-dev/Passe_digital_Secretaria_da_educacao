@@ -1,10 +1,7 @@
 package com.PasseDigital.system.service.user;
 
 
-import com.PasseDigital.system.exception.user.UserNotFoundException;
-import com.PasseDigital.system.model.dto.response.user.StudentResponse;
-import com.PasseDigital.system.model.entity.User;
-import com.PasseDigital.system.model.repository.UserRepository;
+import com.PasseDigital.system.model.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 

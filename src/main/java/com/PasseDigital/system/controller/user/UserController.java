@@ -1,6 +1,7 @@
 package com.PasseDigital.system.controller.user;
 
 
+import com.PasseDigital.system.model.dto.request.user.UserChangePasswordRequest;
 import com.PasseDigital.system.model.dto.request.user.UserLoginRequest;
 import com.PasseDigital.system.model.dto.response.user.StudentResponse;
 import com.PasseDigital.system.model.dto.response.user.UserLoginResponse;
@@ -32,5 +33,9 @@ public class UserController {
         return userService.getInfoStudent(registration);
     }
 
+    @PutMapping("/password")
+    public void changePassword(@RequestBody UserChangePasswordRequest request){
+        userService.changePassword(request);
+    }
 
 }
