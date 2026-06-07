@@ -89,6 +89,7 @@ public class UserService {
         );
     }
 
+    // public
     @Transactional
     public void changePassword(UserChangePasswordRequest request){
 

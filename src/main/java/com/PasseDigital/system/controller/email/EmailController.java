@@ -1,4 +1,4 @@
-package com.PasseDigital.system.controller;
+package com.PasseDigital.system.controller.email;
 
 import com.PasseDigital.system.model.dto.request.email.EmailSenderRequest;
 import com.PasseDigital.system.model.dto.response.email.EmailSenderResponse;

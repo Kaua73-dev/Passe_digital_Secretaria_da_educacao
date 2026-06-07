@@ -39,17 +39,17 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.DELETE, "/auth/delete").hasAnyRole("ADMIN", "SECRETARY")
                                 .requestMatchers(HttpMethod.GET, "/auth/student").hasAnyRole("ADMIN", "SECRETARY", "STUDENT")
-
+                                .requestMatchers(HttpMethod.PUT, "/auth/password").permitAll()
 
                                 // secretary
                                 .requestMatchers(HttpMethod.POST, "/secretary/student/register").permitAll() //.hasAnyRole("ADMIN", "SECRETARY")
                                 .requestMatchers(HttpMethod.PUT, "/secretary/{studentId}").hasAnyRole("ADMIN", "SECRETARY")
 
-                                .requestMatchers(HttpMethod.POST, "/email/send").permitAll()
-
                                 // student
 
 
+                                // email
+                                .requestMatchers(HttpMethod.POST, "/email/send").permitAll()
 
                                 // CodeEmail
                                 .requestMatchers(HttpMethod.POST, "/code/validate").permitAll()
