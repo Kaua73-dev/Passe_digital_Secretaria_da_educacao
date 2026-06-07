@@ -13,6 +13,6 @@ public interface CodeEmailRepository extends JpaRepository<CodeEmail, Integer> {
 
     Optional<CodeEmail> findByCode(String code);
     Optional<CodeEmail> findByTempToken(String tempToken);
-    Optional<CodeEmail> findTopByUserOrderByCreatedAtDesc(User user);
+    Optional<CodeEmail> findTopByUserOrderByCreateAtDesc(User user);
 
 }

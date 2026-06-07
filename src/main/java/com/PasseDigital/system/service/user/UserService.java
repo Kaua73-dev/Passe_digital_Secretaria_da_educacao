@@ -15,6 +15,7 @@ import com.PasseDigital.system.model.repository.codeEmail.CodeEmailRepository;
 import com.PasseDigital.system.model.repository.user.UserRepository;
 import com.PasseDigital.system.model.roles.user.UserEnum;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 
 
 @Service
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;

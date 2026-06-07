@@ -11,7 +11,7 @@ import com.PasseDigital.system.model.entity.user.User;
 import com.PasseDigital.system.model.repository.codeEmail.CodeEmailRepository;
 import com.PasseDigital.system.model.roles.codeEmail.CodeEmailEnum;
 import jakarta.transaction.Transactional;
-import org.springframework.cglib.core.Local;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,6 +20,7 @@ import java.util.Random;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class CodeEmailService {
 
     private final CodeEmailRepository codeEmailRepository;
@@ -32,7 +33,7 @@ public class CodeEmailService {
     public String generateCode(User user){
 
         Optional<CodeEmail> lastCode =
-                codeEmailRepository.findTopByUserOrderByCreatedAtDesc(user);
+                codeEmailRepository.findTopByUserOrderByCreateAtDesc(user);
 
         if(lastCode.isPresent()){
             LocalDateTime nextAllowedTime = lastCode.get().getCreateAt().plusMinutes(1);
@@ -90,6 +91,7 @@ public class CodeEmailService {
                 LocalDateTime.now().plusMinutes(5)
         );
         codeEmail.setUserCanChangePassword(true);
+
 
         codeEmailRepository.save(codeEmail);
 
