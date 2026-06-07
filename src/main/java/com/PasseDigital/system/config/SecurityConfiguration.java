@@ -42,10 +42,19 @@ public class SecurityConfiguration {
 
 
                                 // secretary
-                                .requestMatchers(HttpMethod.POST, "/secretary/student/register").hasAnyRole("ADMIN", "SECRETARY")
+                                .requestMatchers(HttpMethod.POST, "/secretary/student/register").permitAll() //.hasAnyRole("ADMIN", "SECRETARY")
                                 .requestMatchers(HttpMethod.PUT, "/secretary/{studentId}").hasAnyRole("ADMIN", "SECRETARY")
 
+                                .requestMatchers(HttpMethod.POST, "/email/send").permitAll()
+
                                 // student
+
+
+
+                                // CodeEmail
+                                .requestMatchers(HttpMethod.POST, "/code/validate").permitAll()
+
+
 
 
                 )

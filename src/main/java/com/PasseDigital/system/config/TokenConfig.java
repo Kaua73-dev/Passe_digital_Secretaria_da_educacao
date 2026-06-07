@@ -1,6 +1,6 @@
 package com.PasseDigital.system.config;
 
-import com.PasseDigital.system.model.entity.User;
+import com.PasseDigital.system.model.entity.user.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -15,7 +15,7 @@ import java.time.ZoneOffset;
 @Component
 public class TokenConfig {
 
-    @Value("{jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
     public String generateToken(User user){

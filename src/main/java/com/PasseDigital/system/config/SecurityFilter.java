@@ -1,6 +1,6 @@
 package com.PasseDigital.system.config;
 
-import com.PasseDigital.system.model.repository.UserRepository;
+import com.PasseDigital.system.model.repository.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

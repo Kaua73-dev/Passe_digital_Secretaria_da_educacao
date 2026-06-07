@@ -1,0 +1,26 @@
+package com.PasseDigital.system.controller;
+
+import com.PasseDigital.system.model.dto.request.email.EmailSenderRequest;
+import com.PasseDigital.system.model.dto.response.email.EmailSenderResponse;
+import com.PasseDigital.system.service.email.EmailService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/email")
+public class EmailController {
+
+    private final EmailService emailService;
+
+    public EmailController(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+    @PostMapping("/send")
+    public EmailSenderResponse send(@RequestBody EmailSenderRequest request){
+        return emailService.sendEmail(request);
+    }
+
+}

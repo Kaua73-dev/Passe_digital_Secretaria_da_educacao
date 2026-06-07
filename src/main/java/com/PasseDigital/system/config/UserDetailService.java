@@ -1,7 +1,7 @@
 package com.PasseDigital.system.config;
 
 import com.PasseDigital.system.exception.user.UserNotFoundException;
-import com.PasseDigital.system.model.repository.UserRepository;
+import com.PasseDigital.system.model.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
