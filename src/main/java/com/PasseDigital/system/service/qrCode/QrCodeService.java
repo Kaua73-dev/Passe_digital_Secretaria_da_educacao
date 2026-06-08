@@ -78,7 +78,6 @@ public class QrCodeService {
         }
     }
 
-
     public QrCodeValidResponse validateQrCode(QrCodeValidateRequest request){
 
         QrCode qrCode = qrCodeRepository.findByContent(request.content())

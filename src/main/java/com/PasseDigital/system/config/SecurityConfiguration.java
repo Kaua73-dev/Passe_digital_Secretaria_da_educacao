@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                                 // user
                                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.DELETE, "/auth/delete").hasAnyRole("ADMIN", "SECRETARY")
-                                .requestMatchers(HttpMethod.GET, "/auth/student").hasAnyRole("ADMIN", "SECRETARY", "STUDENT")
+                                .requestMatchers(HttpMethod.GET, "/auth/student").hasAnyRole("ADMIN", "SECRETARY")
                                 .requestMatchers(HttpMethod.PUT, "/auth/password").permitAll()
 
                                 // secretary
@@ -46,7 +46,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.PUT, "/secretary/{studentId}").hasAnyRole("ADMIN", "SECRETARY")
 
                                 // student
-
+                                // ainda nada feito
 
                                 // email
                                 .requestMatchers(HttpMethod.POST, "/email/send").permitAll()

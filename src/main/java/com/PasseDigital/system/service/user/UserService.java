@@ -105,6 +105,7 @@ public class UserService {
         if(codeEmail.getExpirationToken().isBefore(LocalDateTime.now())){
             codeEmail.setUserCanChangePassword(false);
             codeEmail.setTempToken(null);
+            codeEmailRepository.save(codeEmail);
             throw new CodeEmailTempTokenInvalidException();
         }
 
@@ -118,7 +119,5 @@ public class UserService {
         userRepository.save(user);
 
     }
-
-
 
 }

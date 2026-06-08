@@ -29,7 +29,6 @@ public class SecretaryService {
     }
 
 
-    // apenas adm / secretary
     public StudentRegisterResponse studentRegister(StudentRegisterRequest request){
 
         if(userRepository.findByRegistration(request.registration()).isPresent()){
@@ -64,11 +63,11 @@ public class SecretaryService {
 
     }
 
-    // apenas adm / secretary
     @Transactional
     public StudentUpdateResponse updateStudent(Integer studentId, StudentUpdateRequest request){
 
-        User student = userRepository.findById(studentId).orElseThrow(UserNotFoundException::new);
+        User student = userRepository.findById(studentId)
+                .orElseThrow(UserNotFoundException::new);
 
         if(!student.getUserEnum().equals(UserEnum.STUDENT)){
             throw new UserNotAllowedException();
