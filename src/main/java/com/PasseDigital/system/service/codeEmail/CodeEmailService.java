@@ -75,6 +75,7 @@ public class CodeEmailService {
 
         if(codeEmail.getExpirationAt().isBefore(LocalDateTime.now())){
             codeEmail.setCodeEmailEnum(CodeEmailEnum.EXPIRED);
+            codeEmailRepository.save(codeEmail);
             throw new CodeEmailExpirationException();
         }
 
