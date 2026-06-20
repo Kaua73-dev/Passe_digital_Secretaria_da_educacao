@@ -7,8 +7,8 @@ import java.time.LocalDate;
 public record StudentUpdateRequest(String name,
                                    String email,
                                    String registration,
-                                   String studentClass,
-                                   String education,
+                                   StudentClassRequest studentClass,
+                                   StudentEducationRequest education,
                                    LocalDate birth,
                                    UserStudentShiftEnum userStudentShiftEnum ) {
 }

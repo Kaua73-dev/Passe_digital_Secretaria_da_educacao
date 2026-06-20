@@ -48,14 +48,16 @@ public class UserService {
     // publica para ambos
     public UserLoginResponse login(UserLoginRequest request){
 
+
+
         if(userRepository.findByRegistration(request.registration()).isEmpty()){
             throw new UserNotFoundException();
         }
 
         UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.registration(), request.password());
         Authentication authentication = authenticationManager.authenticate(userAndPass);
-
         User user = (User) authentication.getPrincipal();
+
         String token = tokenConfig.generateToken(user);
         return new UserLoginResponse(token, user.getUserEnum());
 

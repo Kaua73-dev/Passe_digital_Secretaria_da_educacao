@@ -6,9 +6,14 @@ import com.PasseDigital.system.exception.user.UserNotAllowedException;
 import com.PasseDigital.system.exception.user.UserNotFoundException;
 import com.PasseDigital.system.model.dto.request.user.StudentRegisterRequest;
 import com.PasseDigital.system.model.dto.request.user.StudentUpdateRequest;
-import com.PasseDigital.system.model.dto.response.user.StudentRegisterResponse;
-import com.PasseDigital.system.model.dto.response.user.StudentUpdateResponse;
+import com.PasseDigital.system.model.dto.response.user.StudentClassResponse;
+import com.PasseDigital.system.model.dto.response.user.StudentEducationResponse;
+import com.PasseDigital.system.model.dto.response.user.StudentResponse;
 import com.PasseDigital.system.model.entity.user.User;
+import com.PasseDigital.system.model.entity.user.flyweight.UserStudentClass;
+import com.PasseDigital.system.model.entity.user.flyweight.UserStudentEducation;
+import com.PasseDigital.system.model.factory.UserStudentClassFactory;
+import com.PasseDigital.system.model.factory.UserStudentEducationFactory;
 import com.PasseDigital.system.model.repository.user.UserRepository;
 import com.PasseDigital.system.model.roles.user.UserEnum;
 import jakarta.transaction.Transactional;
@@ -22,49 +27,71 @@ public class SecretaryService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserStudentClassFactory userStudentClassFactory;
+    private final UserStudentEducationFactory userStudentEducationFactory;
 
-    public SecretaryService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+    public SecretaryService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserStudentClassFactory userStudentClassFactory, UserStudentEducationFactory userStudentEducationFactory) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userStudentClassFactory = userStudentClassFactory;
+        this.userStudentEducationFactory = userStudentEducationFactory;
     }
 
 
-    public StudentRegisterResponse studentRegister(StudentRegisterRequest request){
+    private StudentResponse studentResponse(User user){
+        return new StudentResponse(
+                user.getName(),
+                user.getEmail(),
+                user.getRegistration(),
+
+                new StudentClassResponse(
+                        user.getUserStudentClass().getStudentClass()
+                ),
+
+                new StudentEducationResponse(
+                        user.getUserStudentEducation().getEducation()
+                ),
+
+                user.getBirth(),
+                user.getUserStudentShiftEnum()
+        );
+    }
+
+
+
+    public StudentResponse studentRegister(StudentRegisterRequest request){
 
         if(userRepository.findByRegistration(request.registration()).isPresent()){
             throw new StudentAlreadyExistException();
         }
+
+
+        UserStudentClass studentClass = userStudentClassFactory.getStudentClass(request.studentClass());
+        UserStudentEducation studentEducation = userStudentEducationFactory.getStudentEducation(request.studentEducation());
 
         User student = new User();
         student.setName(request.name());
         student.setEmail(request.email());
         student.setRegistration(request.registration());
         student.setPassword(passwordEncoder.encode(request.password()));
-        student.setStudentClass(request.studentClass());
-        student.setEducation(request.education());
+        student.setUserStudentClass(studentClass);
+        student.setUserStudentEducation(studentEducation);
         student.setBirth(request.birth());
         student.setUserStudentShiftEnum(request.userStudentShiftEnum());
+
 
         student.setCreateAt(LocalDateTime.now());
         student.setUserEnum(UserEnum.STUDENT);
 
         User studentSaved = userRepository.save(student);
 
-
-        return new StudentRegisterResponse(
-                studentSaved.getName(),
-                studentSaved.getEmail(),
-                studentSaved.getRegistration(),
-                studentSaved.getStudentClass(),
-                studentSaved.getEducation(),
-                studentSaved.getBirth(),
-                studentSaved.getUserStudentShiftEnum()
-        );
+        return studentResponse(studentSaved);
 
     }
 
     @Transactional
-    public StudentUpdateResponse updateStudent(Integer studentId, StudentUpdateRequest request){
+    public StudentResponse updateStudent(Integer studentId, StudentUpdateRequest request){
 
         User student = userRepository.findById(studentId)
                 .orElseThrow(UserNotFoundException::new);
@@ -73,26 +100,20 @@ public class SecretaryService {
             throw new UserNotAllowedException();
         }
 
+        UserStudentClass studentClass = userStudentClassFactory.getStudentClass(request.studentClass());
+        UserStudentEducation studentEducation = userStudentEducationFactory.getStudentEducation(request.education());
+
         student.setName(request.name());
         student.setEmail(request.email());
         student.setRegistration(request.registration());
-        student.setStudentClass(request.studentClass());
-        student.setEducation(request.education());
+        student.setUserStudentClass(studentClass);
+        student.setUserStudentEducation(studentEducation);
         student.setBirth(request.birth());
         student.setUserStudentShiftEnum(request.userStudentShiftEnum());
 
         User studentUpdate = userRepository.save(student);
 
-        return new StudentUpdateResponse(
-          studentUpdate.getName(),
-          studentUpdate.getEmail(),
-          studentUpdate.getRegistration(),
-          studentUpdate.getStudentClass(),
-          studentUpdate.getEducation(),
-          studentUpdate.getBirth(),
-          studentUpdate.getUserStudentShiftEnum()
-
-        );
+        return studentResponse(studentUpdate);
 
     }
 

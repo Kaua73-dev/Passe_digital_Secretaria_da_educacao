@@ -1,6 +1,8 @@
 package com.PasseDigital.system.model.entity.user;
 
 
+import com.PasseDigital.system.model.entity.user.flyweight.UserStudentClass;
+import com.PasseDigital.system.model.entity.user.flyweight.UserStudentEducation;
 import com.PasseDigital.system.model.roles.user.UserEnum;
 import com.PasseDigital.system.model.roles.user.UserStudentShiftEnum;
 import jakarta.persistence.*;
@@ -39,11 +41,14 @@ public class User implements UserDetails {
     @Column(length = 550, nullable = false)
     private String password;
 
-    @Column(length = 2)
-    private String studentClass; // turma
+    @ManyToOne
+    @JoinColumn(name = "student_education_id")
+    private UserStudentEducation userStudentEducation; // etapa
 
-    @Column(length = 50)
-    private String education; // etapa
+    @ManyToOne
+    @JoinColumn(name = "student_class_id")
+    private UserStudentClass userStudentClass; // turma
+
 
     @Column(nullable = false)
     private LocalDate birth;
@@ -93,4 +98,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+
 }
