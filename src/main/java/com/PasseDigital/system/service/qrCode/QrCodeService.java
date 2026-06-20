@@ -9,6 +9,8 @@ import com.PasseDigital.system.exception.user.UserNotAllowedException;
 import com.PasseDigital.system.exception.user.UserNotFoundException;
 import com.PasseDigital.system.model.dto.request.qrCode.QrCodeValidateRequest;
 import com.PasseDigital.system.model.dto.response.qrCode.QrCodeValidResponse;
+import com.PasseDigital.system.model.dto.response.user.StudentClassResponse;
+import com.PasseDigital.system.model.dto.response.user.StudentEducationResponse;
 import com.PasseDigital.system.model.dto.response.user.StudentResponse;
 import com.PasseDigital.system.model.entity.qrCode.QrCode;
 import com.PasseDigital.system.model.entity.user.User;
@@ -105,8 +107,13 @@ public class QrCodeService {
                         student.getName(),
                         student.getEmail(),
                         student.getRegistration(),
-                        student.getStudentClass(),
-                        student.getEducation(),
+                        new StudentClassResponse(
+                                student.getUserStudentClass().getStudentClass()
+                        ),
+
+                        new StudentEducationResponse(
+                                student.getUserStudentEducation().getEducation()
+                        ),
                         student.getBirth(),
                         student.getUserStudentShiftEnum()
 

@@ -1,5 +1,6 @@
 package com.PasseDigital.system.service.user;
 
+import com.PasseDigital.system.auth.AuthVerifyService;
 import com.PasseDigital.system.config.TokenConfig;
 import com.PasseDigital.system.exception.codeEmail.CodeEmailTempTokenInvalidException;
 import com.PasseDigital.system.exception.codeEmail.CodeEmailTempTokenNotFoundException;
@@ -7,12 +8,19 @@ import com.PasseDigital.system.exception.user.UserNotAllowedException;
 import com.PasseDigital.system.exception.user.UserNotFoundException;
 import com.PasseDigital.system.model.dto.request.user.UserChangePasswordRequest;
 import com.PasseDigital.system.model.dto.request.user.UserLoginRequest;
+import com.PasseDigital.system.model.dto.response.user.StudentClassResponse;
+import com.PasseDigital.system.model.dto.response.user.StudentEducationResponse;
 import com.PasseDigital.system.model.dto.response.user.StudentResponse;
 import com.PasseDigital.system.model.dto.response.user.UserLoginResponse;
 import com.PasseDigital.system.model.entity.codeEmail.CodeEmail;
 import com.PasseDigital.system.model.entity.user.User;
+import com.PasseDigital.system.model.entity.user.flyweight.UserStudentClass;
+import com.PasseDigital.system.model.entity.user.flyweight.UserStudentEducation;
+import com.PasseDigital.system.model.factory.UserStudentClassFactory;
+import com.PasseDigital.system.model.factory.UserStudentEducationFactory;
 import com.PasseDigital.system.model.repository.codeEmail.CodeEmailRepository;
 import com.PasseDigital.system.model.repository.user.UserRepository;
+import com.PasseDigital.system.model.repository.user.UserStudentClassRepository;
 import com.PasseDigital.system.model.roles.user.UserEnum;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -32,16 +40,22 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenConfig tokenConfig;
-    private final AuthenticationManager authenticationManager;
+    private final AuthVerifyService authVerifyService;
     private final CodeEmailRepository codeEmailRepository;
+    private final UserStudentClassFactory userStudentClassFactory;
+    private final UserStudentEducationFactory userStudentEducationFactory;
+    private final AuthenticationManager authenticationManager;
 
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenConfig tokenConfig, AuthenticationManager authenticationManager, CodeEmailRepository codeEmailRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenConfig tokenConfig, AuthVerifyService authVerifyService, CodeEmailRepository codeEmailRepository, UserStudentClassFactory userStudentClassFactory, UserStudentEducationFactory userStudentEducationFactory, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenConfig = tokenConfig;
-        this.authenticationManager = authenticationManager;
+        this.authVerifyService = authVerifyService;
         this.codeEmailRepository = codeEmailRepository;
+        this.userStudentClassFactory = userStudentClassFactory;
+        this.userStudentEducationFactory = userStudentEducationFactory;
+        this.authenticationManager = authenticationManager;
     }
 
 
@@ -75,7 +89,6 @@ public class UserService {
 
     // student/admin/secretary
     public StudentResponse getInfoStudent(String registration){
-
         User student = userRepository.findByRegistration(registration).orElseThrow(UserNotFoundException::new);
 
         if(!student.getUserEnum().equals(UserEnum.STUDENT)){
@@ -86,8 +99,13 @@ public class UserService {
                 student.getName(),
                 student.getEmail(),
                 student.getRegistration(),
-                student.getStudentClass(),
-                student.getEducation(),
+                new StudentClassResponse(
+                        student.getUserStudentClass().getStudentClass()
+                ),
+
+                new StudentEducationResponse(
+                        student.getUserStudentEducation().getEducation()
+                ),
                 student.getBirth(),
                 student.getUserStudentShiftEnum()
         );
