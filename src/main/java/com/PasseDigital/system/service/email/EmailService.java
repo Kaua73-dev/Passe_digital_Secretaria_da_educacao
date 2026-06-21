@@ -53,7 +53,7 @@ public class EmailService {
 
 
     @Transactional
-    public EmailSenderResponse sendEmail(EmailSenderRequest request){
+    public EmailSenderResponse sendCodeEmail(EmailSenderRequest request){
 
         User user = userRepository.findByRegistration(request.registration()).orElseThrow(UserNotFoundException::new);
 
@@ -138,6 +138,43 @@ public class EmailService {
 
 
     }
+
+
+    public void sendEmailQrCodeValidated() {
+        User student = authVerifyService.getAuthenticate();
+        Email email = new Email();
+        email.setUser(student);
+        email.setRecipient(student.getEmail());
+
+
+        try {
+            String htmlMessage = "deu certo";
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+
+            helper.setTo(student.getEmail());
+            helper.setSubject("Seu Qr Code foi válidado com sucesso!");
+            helper.setText(htmlMessage, true);
+            javaMailSender.send(message);
+
+
+            email.setSendAt(LocalDateTime.now());
+            email.setEmailStatusEnum(EmailStatusEnum.SUCCESS);
+
+
+        } catch (Exception e){
+            email.setEmailStatusEnum(EmailStatusEnum.FAILED);
+            email.setErrorMessage(e.getMessage());
+        }
+
+        emailRepository.save(email);
+
+    }
+
+
+
 
 
 

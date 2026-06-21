@@ -17,6 +17,7 @@ import com.PasseDigital.system.model.entity.user.User;
 import com.PasseDigital.system.model.repository.qrCode.QrCodeRepository;
 import com.PasseDigital.system.model.repository.user.UserRepository;
 import com.PasseDigital.system.model.roles.qrCode.QrCodeStatusEnum;
+import com.PasseDigital.system.service.email.EmailService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -36,12 +37,14 @@ public class QrCodeService {
     private final AuthVerifyService authVerifyService;
     private final QrCodeRepository qrCodeRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
 
-    public QrCodeService(AuthVerifyService authVerifyService, QrCodeRepository qrCodeRepository, UserRepository userRepository) {
+    public QrCodeService(AuthVerifyService authVerifyService, QrCodeRepository qrCodeRepository, UserRepository userRepository, EmailService emailService) {
         this.authVerifyService = authVerifyService;
         this.qrCodeRepository = qrCodeRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -99,6 +102,8 @@ public class QrCodeService {
         QrCode qrCodeValid = qrCodeRepository.save(qrCode);
 
         User student = qrCodeValid.getUser();
+
+        emailService.sendEmailQrCodeValidated();
 
         return new QrCodeValidResponse(
                 qrCodeValid.getValidateAt(),

@@ -114,7 +114,6 @@ public class UserService {
     // public
     @Transactional
     public void changePassword(UserChangePasswordRequest request){
-
         CodeEmail codeEmail = codeEmailRepository.findByTempToken(request.token())
                 .orElseThrow(CodeEmailTempTokenNotFoundException::new);
 

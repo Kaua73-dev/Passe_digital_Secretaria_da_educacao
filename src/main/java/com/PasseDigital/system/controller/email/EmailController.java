@@ -20,7 +20,7 @@ public class EmailController {
 
     @PostMapping("/send")
     public EmailSenderResponse send(@RequestBody EmailSenderRequest request){
-        return emailService.sendEmail(request);
+        return emailService.sendCodeEmail(request);
     }
 
 }
