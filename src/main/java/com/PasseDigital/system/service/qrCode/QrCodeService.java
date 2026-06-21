@@ -5,8 +5,6 @@ import com.PasseDigital.system.auth.AuthVerifyService;
 import com.PasseDigital.system.exception.qrCode.QrCodeDefeatedException;
 import com.PasseDigital.system.exception.qrCode.QrCodeInvalidException;
 import com.PasseDigital.system.exception.qrCode.QrCodeNotFoundException;
-import com.PasseDigital.system.exception.user.UserNotAllowedException;
-import com.PasseDigital.system.exception.user.UserNotFoundException;
 import com.PasseDigital.system.model.dto.request.qrCode.QrCodeValidateRequest;
 import com.PasseDigital.system.model.dto.response.qrCode.QrCodeValidResponse;
 import com.PasseDigital.system.model.dto.response.user.StudentClassResponse;
@@ -103,7 +101,7 @@ public class QrCodeService {
 
         User student = qrCodeValid.getUser();
 
-        emailService.sendEmailQrCodeValidated();
+        emailService.sendEmailQrCodeValidated(qrCode);
 
         return new QrCodeValidResponse(
                 qrCodeValid.getValidateAt(),

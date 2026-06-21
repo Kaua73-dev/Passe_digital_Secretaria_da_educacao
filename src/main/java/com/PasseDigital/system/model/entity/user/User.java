@@ -49,7 +49,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "student_class_id")
     private UserStudentClass userStudentClass; // turma
 
-
     @Column(nullable = false)
     private LocalDate birth;
 
