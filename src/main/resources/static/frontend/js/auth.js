@@ -123,6 +123,10 @@ window.Auth = {
     return this.getStoredUserEnum();
   },
 
+  getApiBaseUrl() {
+    return this.apiBaseUrl.replace(/\/auth$/, '');
+  },
+
   requireRole(allowedRoles = []) {
     this.requireAuth();
 

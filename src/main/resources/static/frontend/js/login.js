@@ -4,9 +4,21 @@ const passwordInput = document.getElementById('password');
 const statusMessage = document.getElementById('statusMessage');
 const submitButton = document.getElementById('submitButton');
 
+function showStatus(message, isError = true) {
+  statusMessage.textContent = message;
+  statusMessage.classList.toggle('text-red-600', isError);
+  statusMessage.classList.toggle('text-emerald-600', !isError);
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const successMessage = urlParams.get('message');
+if (successMessage) {
+  showStatus(successMessage, false);
+}
+
 loginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  statusMessage.textContent = '';
+  showStatus('', true);
 
   const registration = registrationInput.value.trim();
   const password = passwordInput.value;

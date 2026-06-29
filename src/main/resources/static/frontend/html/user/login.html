@@ -18,35 +18,8 @@
 </head>
 <body class="min-h-screen bg-background text-text">
   <main class="flex min-h-screen items-center justify-center px-4 py-10">
-    <section class="w-full max-w-5xl overflow-hidden rounded-3xl bg-white/90 shadow-2xl ring-1 ring-slate-200 sm:grid sm:grid-cols-[1.1fr_1fr]">
-      <div class="relative hidden bg-brand px-10 py-12 text-white sm:block">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.22),_transparent_40%)]"></div>
-        <div class="relative z-10 space-y-8">
-          <div class="flex items-center gap-3 text-white/90">
-            <div class="flex h-12 w-12 items-center justify-center rounded-3xl bg-white/15 text-2xl">PD</div>
-            <div>
-              <p class="text-sm uppercase tracking-[0.3em] text-white/70">Sistema escolar</p>
-              <h1 class="text-2xl font-semibold">Passe Digital</h1>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <p class="max-w-xs text-base leading-7 text-white/85">Controle as entradas e saídas dos alunos com segurança e agilidade. Acesse relatórios de frequência, gerencie usuários e monitore a rotina escolar em uma plataforma moderna.</p>
-            <div class="space-y-3">
-              <div class="rounded-3xl bg-white/10 px-4 py-3 shadow-sm">
-                <p class="text-sm font-medium text-white/90">Design profissional</p>
-                <p class="text-sm text-white/70">Experiência limpa e simples.</p>
-              </div>
-              <div class="rounded-3xl bg-white/10 px-4 py-3 shadow-sm">
-                <p class="text-sm font-medium text-white/90">Segurança JWT</p>
-                <p class="text-sm text-white/70">Token armazenado localmente durante o desenvolvimento.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="px-8 py-10 sm:px-12">
+    <section class="w-full max-w-lg overflow-hidden rounded-3xl bg-white/95 shadow-2xl ring-1 ring-slate-200">
+      <div class="px-8 py-10 sm:px-10">
         <div class="mb-8 flex items-center justify-between">
           <div>
             <p class="text-sm uppercase tracking-[0.28em] text-slate-500">Bem-vindo a</p>
@@ -58,19 +31,23 @@
         <form id="loginForm" class="space-y-6">
           <div>
             <label for="registration" class="block text-sm font-medium text-slate-700">Matrícula</label>
-            <input id="registration" name="registration" type="text" placeholder="1234567" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" />
+            <input id="registration" name="registration" type="text" placeholder="1234567" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
           </div>
 
           <div>
             <label for="password" class="block text-sm font-medium text-slate-700">Senha</label>
-            <input id="password" name="password" type="password" placeholder="••••••••" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" />
+            <input id="password" name="password" type="password" placeholder="••••••••" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
           </div>
 
           <div id="statusMessage" class="min-h-[1.5rem] text-sm text-red-600"></div>
 
-          <button id="submitButton" type="submit" class="inline-flex w-full items-center justify-center rounded-2xl bg-brand px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-brand/20 transition hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-brand/50 disabled:cursor-not-allowed disabled:opacity-70">
+          <button id="submitButton" type="submit" class="inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-200/30 transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500/40 disabled:cursor-not-allowed disabled:opacity-70">
             Entrar
           </button>
+
+          <div class="mt-4 text-center">
+            <a href="forgot-password.html" class="text-sm font-medium text-brand transition hover:text-brand-dark">Esqueceu sua senha?</a>
+          </div>
         </form>
       </div>
     </section>
