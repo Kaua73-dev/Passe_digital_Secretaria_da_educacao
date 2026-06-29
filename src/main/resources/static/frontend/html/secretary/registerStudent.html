@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Aluno | Passe Digital</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { colors: { brand: '#2563EB', 'brand-dark': '#1E40AF', background: '#F3F4F6', card: '#FFFFFF', text: '#1F2937' } } } }</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="min-h-screen bg-background text-text">
+  <div class="mx-auto flex min-h-screen max-w-7xl flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
+    <header class="mx-auto w-full max-w-4xl rounded-[32px] bg-white px-6 py-6 shadow-sm ring-1 ring-slate-200">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm uppercase tracking-[0.28em] text-slate-500">Secretaria Escolar</p>
+          <h1 class="mt-2 text-3xl font-semibold text-text">Cadastrar novo aluno</h1>
+          <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Preencha os dados do estudante para criar um registro no Passe Digital.</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-6">
+      <form id="registerForm" class="mx-auto w-full max-w-4xl space-y-6 rounded-[32px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div class="space-y-4">
+          <div class="rounded-3xl bg-slate-50 p-5">
+            <h2 class="text-xl font-semibold text-text">Informações Pessoais</h2>
+            <p class="mt-2 text-sm leading-6 text-slate-600">Preencha os dados pessoais do estudante com atenção aos detalhes.</p>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="flex flex-col gap-2">
+              <label for="name" class="text-sm font-medium text-slate-700">Nome completo</label>
+              <input id="name" name="name" type="text" placeholder="Nome completo do estudante" class="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" />
+              <p id="nameError" class="text-sm text-red-600"></p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="email" class="text-sm font-medium text-slate-700">Email</label>
+              <input id="email" name="email" type="email" placeholder="exemplo@escola.com" class="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" />
+              <p id="emailError" class="text-sm text-red-600"></p>
+            </div>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="flex flex-col gap-2">
+              <label for="birth" class="text-sm font-medium text-slate-700">Data de nascimento</label>
+              <input id="birth" name="birth" type="date" class="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" />
+              <p id="birthError" class="text-sm text-red-600"></p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="password" class="text-sm font-medium text-slate-700">Senha</label>
+              <input id="password" name="password" type="password" placeholder="Crie uma senha segura" class="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" />
+              <p id="passwordError" class="text-sm text-red-600"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-3xl bg-slate-50 p-5">
+            <h2 class="text-xl font-semibold text-text">Informações Acadêmicas</h2>
+            <p class="mt-2 text-sm leading-6 text-slate-600">Preencha corretamente os dados escolares do estudante.</p>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="flex flex-col gap-2">
+              <label for="registration" class="text-sm font-medium text-slate-700">Matrícula</label>
+              <input id="registration" name="registration" type="text" placeholder="Ex: 202400123" class="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" />
+              <p id="registrationError" class="text-sm text-red-600"></p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="studentClass" class="text-sm font-medium text-slate-700">Turma</label>
+              <input id="studentClass" name="studentClass" type="text" placeholder="Ex: 1A, 2B, 3E" class="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" />
+              <p id="studentClassError" class="text-sm text-red-600"></p>
+            </div>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="flex flex-col gap-2">
+              <label for="studentEducation" class="text-sm font-medium text-slate-700">Nível de ensino</label>
+              <select id="studentEducation" name="studentEducation" class="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20">
+                <option value="">Selecione o nível</option>
+                <option value="Ensino Fundamental">Ensino Fundamental</option>
+                <option value="Ensino Médio">Ensino Médio</option>
+              </select>
+              <p id="studentEducationError" class="text-sm text-red-600"></p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="shift" class="text-sm font-medium text-slate-700">Turno</label>
+              <select id="shift" name="shift" class="w-full rounded-3xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20">
+                <option value="">Selecione o turno</option>
+                <option value="MORNING">Manhã</option>
+                <option value="AFTERNOON">Tarde</option>
+              </select>
+              <p id="shiftError" class="text-sm text-red-600"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <button type="button" id="cancelButton" class="rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Cancelar</button>
+            <button type="submit" id="submitButton" class="rounded-2xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark">Cadastrar aluno</button>
+          </div>
+        </div>
+
+        <div id="formMessage" class="min-h-[1.5rem] text-sm font-medium"></div>
+      </form>
+    </section>
+  </div>
+
+  <script src="../../js/auth.js"></script>
+  <script src="registerStudent.js"></script>
+</body>
+</html>

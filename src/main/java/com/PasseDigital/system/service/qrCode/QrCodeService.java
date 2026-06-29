@@ -22,6 +22,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import jakarta.transaction.Transactional;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -36,13 +37,16 @@ public class QrCodeService {
     private final QrCodeRepository qrCodeRepository;
     private final UserRepository userRepository;
     private final EmailService emailService;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
-    public QrCodeService(AuthVerifyService authVerifyService, QrCodeRepository qrCodeRepository, UserRepository userRepository, EmailService emailService) {
+
+    public QrCodeService(AuthVerifyService authVerifyService, QrCodeRepository qrCodeRepository, UserRepository userRepository, EmailService emailService, SimpMessagingTemplate messagingTemplate) {
         this.authVerifyService = authVerifyService;
         this.qrCodeRepository = qrCodeRepository;
         this.userRepository = userRepository;
         this.emailService = emailService;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Transactional
@@ -103,7 +107,7 @@ public class QrCodeService {
 
         emailService.sendEmailQrCodeValidated(qrCode);
 
-        return new QrCodeValidResponse(
+        var response = new QrCodeValidResponse(
                 qrCodeValid.getValidateAt(),
                 qrCodeValid.getQrCodeStatusEnum(),
                 new StudentResponse(
@@ -121,6 +125,13 @@ public class QrCodeService {
                         student.getUserStudentShiftEnum()
 
                 ));
+
+        messagingTemplate.convertAndSend(
+                "/topic/response",
+                response
+        );
+        return response;
+
         }
 
 }

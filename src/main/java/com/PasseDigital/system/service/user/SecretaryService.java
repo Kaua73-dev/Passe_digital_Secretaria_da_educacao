@@ -44,15 +44,12 @@ public class SecretaryService {
                 user.getName(),
                 user.getEmail(),
                 user.getRegistration(),
-
                 new StudentClassResponse(
                         user.getUserStudentClass().getStudentClass()
                 ),
-
                 new StudentEducationResponse(
                         user.getUserStudentEducation().getEducation()
                 ),
-
                 user.getBirth(),
                 user.getUserStudentShiftEnum()
         );

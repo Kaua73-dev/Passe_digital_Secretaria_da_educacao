@@ -14,13 +14,10 @@ import com.PasseDigital.system.model.dto.response.user.StudentResponse;
 import com.PasseDigital.system.model.dto.response.user.UserLoginResponse;
 import com.PasseDigital.system.model.entity.codeEmail.CodeEmail;
 import com.PasseDigital.system.model.entity.user.User;
-import com.PasseDigital.system.model.entity.user.flyweight.UserStudentClass;
-import com.PasseDigital.system.model.entity.user.flyweight.UserStudentEducation;
 import com.PasseDigital.system.model.factory.UserStudentClassFactory;
 import com.PasseDigital.system.model.factory.UserStudentEducationFactory;
 import com.PasseDigital.system.model.repository.codeEmail.CodeEmailRepository;
 import com.PasseDigital.system.model.repository.user.UserRepository;
-import com.PasseDigital.system.model.repository.user.UserStudentClassRepository;
 import com.PasseDigital.system.model.roles.user.UserEnum;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -61,8 +58,6 @@ public class UserService {
 
     // publica para ambos
     public UserLoginResponse login(UserLoginRequest request){
-
-
 
         if(userRepository.findByRegistration(request.registration()).isEmpty()){
             throw new UserNotFoundException();

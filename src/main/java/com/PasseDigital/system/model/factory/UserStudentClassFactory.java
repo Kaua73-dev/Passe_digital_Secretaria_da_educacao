@@ -34,15 +34,11 @@ public class UserStudentClassFactory {
 
                         return userStudentClassRepository.save(newClass);
                     });
-
             cache.put(request, student);
         }
 
         return student;
 
     }
-
-
-
 
 }
