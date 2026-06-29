@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passe Digital | Estudante</title>
+    <title>Passe Digital | Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
     <div class="min-h-screen flex items-center justify-center">
         <div class="text-center">
-            <h1 class="text-4xl font-bold text-blue-600 mb-4">Painel do Estudante</h1>
-            <p class="text-gray-600 mb-6">Bem-vindo ao seu painel de estudante</p>
+            <h1 class="text-4xl font-bold text-blue-600 mb-4">Painel do Administrador</h1>
+            <p class="text-gray-600 mb-6">Bem-vindo ao painel administrativo</p>
             <button onclick="logout()" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700">
                 Sair
             </button>
@@ -20,7 +20,7 @@
     <script src="../../js/auth.js"></script>
     <script>
         // Verifica autenticação e permissões
-        Auth.requireRole(['STUDENT']);
+        Auth.requireRole(['ADMIN', 'SECRETARY']);
         
         function logout() {
             Auth.removeToken();
@@ -29,3 +29,4 @@
     </script>
 </body>
 </html>
+

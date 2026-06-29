@@ -5,7 +5,6 @@ import com.PasseDigital.system.auth.AuthVerifyService;
 import com.PasseDigital.system.exception.user.UserNotFoundException;
 import com.PasseDigital.system.model.dto.request.email.EmailSenderRequest;
 import com.PasseDigital.system.model.dto.response.email.EmailSenderResponse;
-import com.PasseDigital.system.model.entity.codeEmail.CodeEmail;
 import com.PasseDigital.system.model.entity.email.Email;
 import com.PasseDigital.system.model.entity.qrCode.QrCode;
 import com.PasseDigital.system.model.entity.user.User;
@@ -13,23 +12,17 @@ import com.PasseDigital.system.model.repository.email.EmailRepository;
 import com.PasseDigital.system.model.repository.user.UserRepository;
 import com.PasseDigital.system.model.roles.email.EmailStatusEnum;
 import com.PasseDigital.system.service.codeEmail.CodeEmailService;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.MailSendException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+
 
 @Service
 public class EmailService {

@@ -4,10 +4,6 @@ const passwordInput = document.getElementById('password');
 const statusMessage = document.getElementById('statusMessage');
 const submitButton = document.getElementById('submitButton');
 
-if (Auth.isAuthenticated()) {
-  Auth.redirectToApp();
-}
-
 loginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   statusMessage.textContent = '';
@@ -25,7 +21,7 @@ loginForm.addEventListener('submit', async (event) => {
 
   try {
     await Auth.login(registration, password);
-    window.location.href = "../../html/studentHomePage.html";
+    Auth.redirectToApp();
   } catch (error) {
     statusMessage.textContent = error.message || 'Erro inesperado ao fazer login.';
   } finally {

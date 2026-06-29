@@ -1,33 +1,80 @@
 window.Auth = {
   storageKey: 'passe_digital_jwt',
+  userEnumKey: 'passe_digital_user_enum',
   apiBaseUrl: 'http://localhost:8080/auth',
 
   saveToken(token) {
     localStorage.setItem(this.storageKey, token);
   },
 
+  saveUserEnum(userEnum) {
+    if (userEnum) {
+      localStorage.setItem(this.userEnumKey, userEnum);
+    }
+  },
+
   getToken() {
     return localStorage.getItem(this.storageKey);
   },
 
+  getStoredUserEnum() {
+    return localStorage.getItem(this.userEnumKey);
+  },
+
   removeToken() {
     localStorage.removeItem(this.storageKey);
+    localStorage.removeItem(this.userEnumKey);
   },
 
   isAuthenticated() {
-    return Boolean(this.getToken());
+    const token = this.getToken();
+
+    if (!token) {
+      return false;
+    }
+
+    const payload = this.decodeTokenPayload(token);
+    if (!payload || typeof payload.exp !== 'number') {
+      this.removeToken();
+      return false;
+    }
+
+    if (Date.now() >= payload.exp * 1000) {
+      this.removeToken();
+      return false;
+    }
+
+    return true;
   },
 
   redirectToLogin() {
-    window.location.href = '/frontend/html/user/login.html';
+    window.location.href = '../user/login.html';
+  },
+
+  redirectToRolePage() {
+    const userEnum = this.getUserEnum();
+
+    if (userEnum === 'STUDENT') {
+      window.location.href = '../student/studentHomePage.html';
+      return;
+    }
+
+    if (userEnum === 'ADMIN' || userEnum === 'SECRETARY') {
+      window.location.href = '../admin/adminHomePage.html';
+      return;
+    }
+
+    
+
+    this.redirectToLogin();
   },
 
   redirectToApp() {
-    window.location.href = '/frontend/html/app.html';
+    this.redirectToRolePage();
   },
 
   redirectToDenied() {
-    window.location.href = '/frontend/html/accessDenied.html';
+    window.location.href = '../accessDenied.html';
   },
 
   requireAuth() {
@@ -59,23 +106,21 @@ window.Auth = {
 
   getUserEnum() {
     const payload = this.decodeTokenPayload(this.getToken());
-    if (!payload) {
-      return null;
+    if (payload) {
+      if (payload.userEnum) {
+        return payload.userEnum;
+      }
+
+      if (payload.role) {
+        return payload.role;
+      }
+
+      if (Array.isArray(payload.roles) && payload.roles.length > 0) {
+        return payload.roles[0];
+      }
     }
 
-    if (payload.userEnum) {
-      return payload.userEnum;
-    }
-
-    if (payload.role) {
-      return payload.role;
-    }
-
-    if (Array.isArray(payload.roles) && payload.roles.length > 0) {
-      return payload.roles[0];
-    }
-
-    return null;
+    return this.getStoredUserEnum();
   },
 
   requireRole(allowedRoles = []) {
@@ -111,7 +156,8 @@ window.Auth = {
     }
 
     this.saveToken(data.token);
-    return data.token;
+    this.saveUserEnum(data.userEnum);
+    return data;
   },
 
   async fetchWithAuth(url, options = {}) {

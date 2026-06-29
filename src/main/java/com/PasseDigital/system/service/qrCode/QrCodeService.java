@@ -125,13 +125,12 @@ public class QrCodeService {
                         student.getUserStudentShiftEnum()
 
                 ));
-
         messagingTemplate.convertAndSend(
                 "/topic/response",
                 response
         );
-        return response;
 
+            return response;
         }
 
 }
